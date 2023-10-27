@@ -28,6 +28,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+			<!-- Categoty Menu Code -->
+			{% if cat_menu %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  Categories
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					{% for items in cat_menu %}
+						<a class="dropdown-item" href="{% url 'category' items|slugify %}">{{ items }}</a>
+					{% endfor %}
+				</div>
+			</li>
+			{% else %}
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'category-list' %}">Categories</a>
+			  </li>
+
+			{% endif %}
             {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'add_post' %}">Add Post</a>
@@ -37,6 +55,7 @@
                 >Add Category</a
               >
             </li>
+
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
@@ -48,6 +67,7 @@
               <a class="nav-link" href="{% url 'login' %}">Login</a>
             </li>
             {% endif %}
+
           </ul>
           <p>Welcome {{post.author}}</p>
           </form>

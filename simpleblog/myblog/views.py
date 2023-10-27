@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category
@@ -15,6 +16,13 @@ class PostListView(ListView):
     model = Post
     template_name = "home.html"
     ordering = ['-createdAt']
+
+    def get_context_data(self, *args, **kwargs):
+          cat_menu = Category.objects.all()
+          context = super(PostListView, self).get_context_data(*args, **kwargs)
+          context["cat_menu"] = cat_menu
+          return context
+
 
 def category_view(request, cats):
     category_posts = Post.objects.filter(category=cats)
@@ -50,6 +58,7 @@ class UpdatePostView(UpdateView):
         return super().form_valid(form)
     # fields = ('title', 'title_tag', 'body')
 
+
 class DeletePostView(DeleteView):
     model = Post
     template_name = "delete_post.html"
@@ -59,6 +68,10 @@ class AddCategoryView(CreateView):
     model = Category
     template_name = "add_category.html"
     fields = '__all__'
+
+def category_list_view(request):
+    cat_menu_list = Category.objects.all()
+    return render(request, 'category_list.html', {'cat_menu_list': cat_menu_list})
 
 def handler404(request, exception):
     return render(request, 'error_404.html', status=404)

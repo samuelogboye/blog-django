@@ -16,6 +16,12 @@ class PostListView(ListView):
     template_name = "home.html"
     ordering = ['-createdAt']
 
+def CategoryView(request, cats):
+    category_posts = Post.objects.filter(category=cats)
+    # category_posts = Post.objects.filter(category=cats.replace('-', ' '))
+    return render(request, 'categories.html', {'cats': cats.title(), 'category_posts': category_posts})
+
+
 class ArticleDetailView(DetailView):
     model = Post
     template_name = "article_details.html"

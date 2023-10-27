@@ -1,11 +1,10 @@
-{% extends "base.html" %} {% block content%}
+{% extends "base.html" %} {% block content%} {% if category_posts %}
+<h1>{{ cats }}</h1>
 
-<h1>Post</h1>
 <ul>
-  {% for post in object_list %}
+  {% for post in category_posts %}
   <li>
-    <a href="{% url 'article-detail' post.pk %}"> {{ post.title }}</a> -
-    <a href="{% url 'category' post.category %}">{{post.category }} </a> -
+    <a href="{% url 'article-detail' post.pk %}"> {{ post.title }}</a>
     posted by {{ post.author.first_name }} {{post.author.last_name }} on
     {{post.createdAt.date}}, at {{post.createdAt.time}} <br />
     {% if user.is_authenticated %} {% if user == post.author %} -
@@ -17,4 +16,6 @@
   </li>
   {% endfor %}
 </ul>
-{% endblock %}
+{% else %}
+<h1>No Posts in this category</h1>
+{% endif %} {% endblock %}

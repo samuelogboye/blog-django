@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block title %} Edit Blog Post {% endblock%}
-{% block content%}
 
+{% block content%}
+{% if user.is_authenticated %} {% if user == post.author %}
 <h1>Update Post...</h1>
 <br /><br />
 
@@ -10,5 +11,17 @@
   <button type="submit" class="btn btn-secondary">Post</button>
 
 </div>
+{% else %}
+<h1>Oops!</h1>
+<br /><br />
+<p>Oopsie-doodle! 🙊 It looks like you stumbled into someone else's creative kitchen. Editing someone else's masterpiece is like redecorating your neighbor's living room without permission! 🎨🛋️ Be sure to cook up your own delicious content instead or collaborate with them – teamwork makes the dream work! 🤝✨"</p>
+<a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+{% endif %} {% else %}
+<h1>Oops!</h1>
+<br /><br />
+<p>Whoa there, eager beaver! It seems you're not logged in, and our blogs are like Fort Knox, super secure! 😅 To edit a post, you gotta be part of the club. Click your heels together three times and head back to the login page to join the fun! 🙌🔐</p>
+<a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+<a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+{% endif %}
 {% endblock %}
 

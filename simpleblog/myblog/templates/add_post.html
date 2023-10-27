@@ -1,17 +1,20 @@
 {% extends "base.html" %} {% block title %} Create a New Blog Post {% endblock%}
 {% block content%}
-
-<h1>Add Blog Post...</h1>
-<br /><br />
-<p>...and share your thoughts with the world!</p>
-<p>Fill in the form below, then click post to add your blog entry.</p>
-
-
-<div class="form-group">
-<form method="POST">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit" class="btn btn-secondary">Post</button>
-
-</div>
+	{% if user.is_authenticated %}
+		<h1>Add Blog Post...</h1>
+		<br /><br />
+		<p>...and share your thoughts with the world!</p>
+		<p>Fill in the form below, then click post to add your blog entry.</p>
+		<br /><br />
+		<div class="form-group">
+		<form method="POST">
+		{% csrf_token %} {{ form.as_p }}
+		<button type="submit" class="btn btn-secondary">Post</button>
+		</div>
+	{% else %}
+		<h1>Oops!</h1>
+		<br /><br />
+		<p>Sorry, you must be logged in to add a blog post.</p>
+	{% endif %}
 {% endblock %}
 

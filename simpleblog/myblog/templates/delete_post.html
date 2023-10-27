@@ -1,22 +1,35 @@
 {% extends "base.html" %} {% block title %} Delete Blog Post {% endblock%}
 {% block content%}
+	{% if user.is_authenticated %}
+		{% if user == post.author %}
+			<h1>Delete Post...</h1>
+			<br /><br />
 
-<h1>Delete Post...</h1>
-<br /><br />
+			<h3>Delete "{{ post.title }}"</h3>
 
-<h3>Delete "{{ post.title }}"</h3>
+			<br />
+			<div class="form-group">
+			<form method="POST">
+			{% csrf_token %}
+			<strong>Are you sure you want to delete "{{ post.title }}"?</strong><br /><br />
+			<br /><br />
+			<button type="submit" class="btn btn-secondary"><a href="{% url 'home' %}" class="btn btn-secondary">No</a></button>
+			<br /><br />
+			<button type="submit" class="btn btn-secondary">Delete Post!</button>
+			<br /><br />
 
-<br />
-<div class="form-group">
-<form method="POST">
-  {% csrf_token %}
-  <strong>Are you sure you want to delete "{{ post.title }}"?</strong><br /><br />
-  <br /><br />
-  <button type="submit" class="btn btn-secondary"><a href="{% url 'home' %}" class="btn btn-secondary">No</a></button>
-  <br /><br />
-  <button type="submit" class="btn btn-secondary">Delete Post!</button>
-  <br /><br />
-
-</div>
+			</div>
+		{% else %}
+			<h1>Oops!</h1>
+			<br /><br />
+			<p>Sorry, you can only delete blog posts to your own account.</p>
+			<a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+		{% endif %}
+	{% else %}
+		<h1>Oops!</h1>
+		<br /><br />
+		<p>Sorry, you must be logged in to delete a blog post.</p>
+		<a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+	{% endif %}
 {% endblock %}
 

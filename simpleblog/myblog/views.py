@@ -1,10 +1,10 @@
 from typing import Any
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category
 from .forms import PostForm, EditForm
-from django.urls import reverse_lazy
-from django.http import Http404
+from django.urls import reverse_lazy, reverse
+from django.http import Http404, HttpResponseRedirect
 # from django.contrib.auth.decorators import login_required
 
 # @login_required
@@ -32,6 +32,16 @@ def category_view(request, cats):
 class ArticleDetailView(DetailView):
     model = Post
     template_name = "article_details.html"
+
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context = super(ArticleDetailView, self).get_context_data(*args, **kwargs)
+
+        stuff = get_object_or_404(Post, id=self.kwargs['pk'])
+        total_likes = stuff.total_likes()
+        context["cat_menu"] = cat_menu
+        context['total_likes'] = total_likes
+        return context
 
     def get(self, request, *args, **kwargs):
         try:
@@ -68,6 +78,23 @@ class AddCategoryView(CreateView):
     model = Category
     template_name = "add_category.html"
     fields = '__all__'
+
+def like_view(request, pk):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+    return HttpResponseRedirect(reverse('article-detail', args=[str(pk)]))
+
+class AddCommentView(CreateView):
+    model = Post
+    template_name = "add_comment.html"
+    fields = '__all__'
+
+
 
 def category_list_view(request):
     cat_menu_list = Category.objects.all()

@@ -13,5 +13,31 @@
 		{{ post.body|safe }}<br /><br />
 
 		<a href="{% url 'home' %}" class="btn btn-secondary">Homepage</a>
+
+		<br /><br />
+		<hr>
+		<br/>
+		{% if user.is_authenticated %}
+			<form action="{% url 'like_post' post.pk %}" method="POST">
+				{% csrf_token %}
+				<button type="submit", name="post_id", value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button>
+				{% if post.likes.count == 1 %}
+					- 1 Like
+				{% else %}
+					- {{ post.likes.count }} Likes
+				{% endif %}
+			</form>
+			<h2>Add Comment</h2>
+            <form action="{% url 'add_comment' post.pk %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="comment_text">Your Comment:</label>
+                    <textarea id="comment_text" name="comment_text"
+					placeholder="Add your comments here"
+					class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </form>
+		{% endif %}
 	</div>
 {% endblock %}

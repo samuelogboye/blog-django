@@ -23,5 +23,15 @@
 <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
 <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
 {% endif %}
+{% load static %}
+	{% block extra_head %}
+    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+    <script>
+        // Initialize TinyMCE
+        tinymce.init({
+            selector: 'textarea',  // To Apply TinyMCE to all textareas
+        });
+    </script>
+{% endblock %}
 {% endblock %}
 

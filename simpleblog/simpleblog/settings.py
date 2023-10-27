@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "myblog",
     "members",
+	"tinymce",
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,12 @@ LOGOUT_REDIRECT_URL = "home"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 360,
+    'width': 800,
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
+    'selector': 'textarea',  # Apply TinyMCE to all textareas
+    'plugins': 'link image table',
+}

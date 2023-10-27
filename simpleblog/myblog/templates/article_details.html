@@ -7,8 +7,9 @@
   			<a href="{% url 'update_post' post.pk %}"> <small>(Edit)</a></small><a href="{% url 'delete_post' post.pk %}"><small>(Delete)</a></small><br />
 		{% endif %}
 	{% endif %}
+	<small>Category: {{ post.category }}</small></small>
 	<hr /><br />
-	{{ post.body }}<br /><br />
+	{{ post.body|safe }}<br /><br />
 
 	<a href="{% url 'home' %}" class="btn btn-secondary">Homepage</a>
 {% endblock %}

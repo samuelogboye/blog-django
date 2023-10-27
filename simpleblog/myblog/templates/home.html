@@ -5,8 +5,8 @@
   {% for post in object_list %}
   <li>
     <a href="{% url 'article-detail' post.pk %}"> {{ post.title }}</a> -
-    <a href="{% url 'category' post.category %}">{{post.category }} </a> -
-    posted by {{ post.author.first_name }} {{post.author.last_name }} on
+    <a href="{% url 'category' post.category %}">{{post.category|slugify }} </a>
+    - posted by {{ post.author.first_name }} {{post.author.last_name }} on
     {{post.createdAt.date}}, at {{post.createdAt.time}} <br />
     {% if user.is_authenticated %} {% if user == post.author %} -
     <a href="{% url 'update_post' post.pk %}">(Edit)</a>

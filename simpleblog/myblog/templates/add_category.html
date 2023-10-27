@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %} Create a new Blog Category {% endblock%}
+{% block content%}
+	{% if user.is_authenticated %}
+		<h1>Add Category...</h1>
+		<br /><br />
+		<div class="form-group">
+		<form method="POST">
+		{% csrf_token %} {{ form.as_p }}
+		<button type="submit" class="btn btn-secondary">Add Category</button>
+		</div>
+	{% else %}
+		<h1>Oops!</h1>
+		<br /><br />
+		<p>Sorry, you must be logged in to add a Category.</p>
+	{% endif %}
+	{% load static %}
+	{% block extra_head %}
+    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+    <script>
+        // Initialize TinyMCE
+        tinymce.init({
+            selector: 'textarea',  // To Apply TinyMCE to all textareas
+        });
+    </script>
+{% endblock %}
+
+{% endblock %}
+

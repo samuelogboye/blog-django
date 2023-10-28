@@ -11,10 +11,9 @@
     {% if user.is_authenticated %} {% if user == post.author %} -
     <a href="{% url 'update_post' post.pk %}">(Edit)</a>
     <a href="{% url 'delete_post' post.pk %}"> Delete</a>
-    {% endif %} {% endif %}
-    <br />
-    {{ post.body|truncatewords:30|safe }}
+    {% endif %} {% endif %} Click the link above to read the blog post
   </li>
+  <br />
   {% endfor %}
 </ul>
 {% endblock %}

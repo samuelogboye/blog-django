@@ -4,7 +4,7 @@
 {% for items in cat_menu_list %}
 <h4>
   <a class="dropdown-item" href="{% url 'category' items|slugify %}"
-    >{{ items }}</a
+    >{{ items|title }}</a
   >
 </h4>
 {% endfor %} {% endblock %}

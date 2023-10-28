@@ -7,7 +7,7 @@
 		<p>Fill in the form below, then click post to add your blog entry.</p>
 		<br /><br />
 		<div class="form-group">
-		<form method="POST">
+		<form method="POST", enctype="multipart/form-data">
 		{% csrf_token %} {{ form.media }} {{ form.as_p }}
 		<button type="submit" class="btn btn-secondary">Post</button>
 		</div>

@@ -11,6 +11,9 @@
 		<small>Category: {{ post.category }}</small></small>
 		<hr /><br />
 		{{ post.body|safe }}<br /><br />
+		{% if post.header_image %}
+			<img src="{{ post.header_image.url}}"
+		{% endif %}
 
 		<a href="{% url 'home' %}" class="btn btn-secondary">Homepage</a>
 

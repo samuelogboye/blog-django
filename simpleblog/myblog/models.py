@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 
+
+
+class Profile(models.Model):
+     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+     bio = models.TextField()
+
+     def __str__(self):
+          return str(self.user)
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
 
@@ -15,6 +24,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
+    header_image = models.FileField(null=True, blank=True, upload_to="images/")
     title_tag = models.CharField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField(blank=True, null=True)

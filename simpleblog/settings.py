@@ -26,8 +26,39 @@ SECRET_KEY = "django-insecure-ya#$&k4fyhv-8dt46@(tltdwkcs)@5p0p$84ezkw(%cbnd^#0_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+CORS_ALLOWED_ORIGINS = [
+   "http://127.0.0.1:8000",
+   "https://blog-django.up.railway.app",
+   "https://blog-django.up.railway.app/",
+   "https://blog-django.up.railway.app/admin",
+   "https://blog-django.up.railway.app/admin/",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+  "http://127.0.0.1:8000",
+  "https://blog-django.up.railway.app",
+  "https://blog-django.up.railway.app/",
+  "https://blog-django.up.railway.app/admin",
+  "https://blog-django.up.railway.app/admin/",
+]
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 

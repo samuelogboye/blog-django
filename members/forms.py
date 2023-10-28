@@ -51,7 +51,15 @@ class EditForm(UserChangeForm):
 		model = User
 		fields = ('username', 'first_name', 'last_name', 'email', 'password', 'last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined')
 
+	def __init__(self, *args, **kwargs):
+		super(EditForm, self).__init__(*args, **kwargs)
 
+        # Make specific fields readonly or disabled
+		self.fields['last_login'].widget.attrs['readonly'] = True
+		self.fields['is_superuser'].widget.attrs['disabled'] = True
+		self.fields['is_staff'].widget.attrs['disabled'] = True
+		self.fields['is_active'].widget.attrs['disabled'] = True
+		self.fields['date_joined'].widget.attrs['readonly'] = True
 
 class PasswordChangingForm(PasswordChangeForm):
 	old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control', 'type':'password'}))

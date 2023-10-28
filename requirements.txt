@@ -7,6 +7,7 @@ django-ckeditor==6.7.0
 django-cloudinary-storage==0.3.0
 django-js-asset==2.1.0
 django-tinymce==3.6.1
+gunicorn==20.1.0
 idna==3.4
 requests==2.31.0
 six==1.16.0

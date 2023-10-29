@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-ya#$&k4fyhv-8dt46@(tltdwkcs)@5p0p$84ezkw(%cbnd^#0_"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -55,6 +55,7 @@ CORS_ALLOW_METHODS = [
     "PUT",
 ]
 
+handler404 = 'myapp.views.handler404'
 
 CORS_ALLOW_CREDENTIALS = True
 

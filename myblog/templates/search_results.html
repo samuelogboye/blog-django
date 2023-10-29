@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %} Your Search Results {% endblock%}
+{%block content%} {% comment %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Search Results for "{{ query }}"</h1>
+      {% if posts %}
+      <ul>
+        {% for post in posts %}
+        <li>
+          <a href="{% url 'article_details' post.slug %}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No results found</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endcomment %} {% endblock %}

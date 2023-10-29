@@ -1,0 +1,8 @@
+{% comment %} {% extends "base.html" %} {% block title %} Create a New Blog Post
+{% endblock%} {% block content%}
+<!-- search.html -->
+<form method="get" action="{% url 'search' %}">
+  {{ form.as_p }}
+  <button type="submit">Search</button>
+</form>
+{% endblock %} {% endcomment %}

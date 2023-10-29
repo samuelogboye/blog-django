@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -111,13 +113,29 @@ WSGI_APPLICATION = "simpleblog.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# If the DATABASE_URL environment variable is defined, use it; otherwise, use SQLite.
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(default=os.environ['DATABASE_URL'])
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': config('DB_HOST'),
+#         'PORT': config('DB_PORT'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -178,10 +196,18 @@ TINYMCE_DEFAULT_CONFIG = {
     'plugins': 'link image table',
 }
 
-CLOUDINARY_STORAGE = {
-	"CLOUD_NAME": "dbn9ejpno",
-	"APP_KEY": "156683231519122",
-	"API_SECRET": "YlobAYbrxmdsozKxNBLqb6MRvRQ"
-}
+# CLOUDINARY_STORAGE Config
 
+# Parse the CLOUDINARY_STORAGE environment variable
+cloudinary_config = config('CLOUDINARY_STORAGE')
+
+# Split the configuration into a dictionary
+cloudinary_settings = dict(item.split('=') for item in cloudinary_config.split())
+
+# Configure your CLOUDINARY_STORAGE settings
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": cloudinary_settings.get("CLOUD_NAME"),
+    "APP_KEY": cloudinary_settings.get("APP_KEY"),
+    "API_SECRET": cloudinary_settings.get("API_SECRET"),
+}
 DEFAULT_FIE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"

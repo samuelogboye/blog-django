@@ -1,8 +1,8 @@
 from typing import Any
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Category
-from .forms import PostForm, EditForm
+from .models import Post, Category, Comment
+from .forms import PostForm, EditForm, SearchForm, CommentForm
 from django.urls import reverse_lazy, reverse
 from django.http import Http404, HttpResponseRedirect
 # from django.contrib.auth.decorators import login_required
@@ -11,6 +11,18 @@ from django.http import Http404, HttpResponseRedirect
 # def custom_login_view(request):
 #     # If a logged-in user tries to access the login view, they will be redirected to the home page
 #     return redirect('home')  # Replace 'home' with the actual URL name of your home page
+
+def search(request):
+    if request.method == 'GET':
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            posts = Post.objects.filter(title__icontains=query)
+            return render(request, 'search_results.html', {'posts': posts, 'query': query})
+    else:
+        form = SearchForm()
+
+    return render(request, 'search.html', {'form': form})
 
 class PostListView(ListView):
     model = Post
@@ -90,15 +102,25 @@ def like_view(request, pk):
     return HttpResponseRedirect(reverse('article-detail', args=[str(pk)]))
 
 class AddCommentView(CreateView):
-    model = Post
+    model = Comment
+    form_class = CommentForm
     template_name = "add_comment.html"
-    fields = '__all__'
+    # fields = '__all__'
+    success_url = reverse_lazy('home')
 
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(AddCommentView, self).get_form_kwargs()
+        kwargs['request'] = self.request  # Pass the request object to the form
+        return kwargs
 
 def category_list_view(request):
     cat_menu_list = Category.objects.all()
     return render(request, 'category_list.html', {'cat_menu_list': cat_menu_list})
+
 
 def handler404(request, exception):
     return render(request, 'error_404.html', status=404)

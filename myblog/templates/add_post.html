@@ -16,16 +16,5 @@
 		<br /><br />
 		<p>Sorry, you must be logged in to add a blog post.</p>
 	{% endif %}
-	{% load static %}
-	{% block extra_head %}
-    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
-    <script>
-        // Initialize TinyMCE
-        tinymce.init({
-            selector: 'textarea',  // To Apply TinyMCE to all textareas
-        });
-    </script>
-{% endblock %}
-
 {% endblock %}
 

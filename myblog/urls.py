@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import PostListView, ArticleDetailView, AddPostView, UpdatePostView, DeletePostView, AddCategoryView, category_view, category_list_view, like_view, AddCommentView
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     # path("", views.home, name="home"),
@@ -18,4 +20,4 @@ urlpatterns = [
 	# path('search_results/', views.search_results, name='search_results'),
     path('article/<slug:slug>/', views.ArticleDetailView.as_view, name='article_details'),
 
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

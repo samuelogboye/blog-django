@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from ckeditor.fields import RichTextField
+from django.utils import timezone
 # from django.utils.text import slugify
 
 
@@ -30,7 +31,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField(blank=True, null=True)
     # body = models.TextField()
-    createdAt = models.DateTimeField(auto_now_add=True)
+    createdAt = models.DateTimeField(default=timezone.now)
     updatedAt = models.DateTimeField(auto_now=True)
     category = models.CharField(max_length=200, default='uncategorized')
     likes = models.ManyToManyField(User, related_name='blog_posts')

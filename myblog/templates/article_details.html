@@ -4,7 +4,8 @@
 
 	<div>
 		<h1>{{ post.title }}</h1>
-		<small>By: <a href="{% url 'edit_profile' %}"> {{ post.author.first_name }} {{ post.author.last_name }}</a> on {{post.createdAt.date}}, at {{post.createdAt.time}}
+		{% load tz %}
+		<small>By: <a href="{% url 'edit_profile' %}"> {{ post.author.first_name }} {{ post.author.last_name }}</a> on {{post.createdAt|timezone:"Africa/Lagos"|date:"Y-m-d"}}, at {{post.createdAt|timezone:"Africa/Lagos"|time:"H:i"}}
 		{% if user.is_authenticated %}
 			{% if user == post.author %}
 				<a href="{% url 'update_post' post.pk %}"> <small>(Edit)</a></small><a href="{% url 'delete_post' post.pk %}"><small>(Delete)</a></small><br />

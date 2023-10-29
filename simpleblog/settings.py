@@ -201,18 +201,18 @@ TINYMCE_DEFAULT_CONFIG = {
     'plugins': 'link image table',
 }
 
-# CLOUDINARY_STORAGE Config
+# # CLOUDINARY_STORAGE Config
 
-# Parse the CLOUDINARY_STORAGE environment variable
-cloudinary_config = config('CLOUDINARY_STORAGE')
+# # Parse the CLOUDINARY_STORAGE environment variable
+# cloudinary_config = config('CLOUDINARY_STORAGE')
 
-# Split the configuration into a dictionary
-cloudinary_settings = dict(item.split('=') for item in cloudinary_config.split())
+# # Split the configuration into a dictionary
+# cloudinary_settings = dict(item.split('=') for item in cloudinary_config.split())
 
-# Configure your CLOUDINARY_STORAGE settings
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": cloudinary_settings.get("CLOUD_NAME"),
-    "APP_KEY": cloudinary_settings.get("APP_KEY"),
-    "API_SECRET": cloudinary_settings.get("API_SECRET"),
-}
-DEFAULT_FIE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+# # Configure your CLOUDINARY_STORAGE settings
+# CLOUDINARY_STORAGE = {
+#     "CLOUD_NAME": cloudinary_settings.get("CLOUD_NAME"),
+#     "APP_KEY": cloudinary_settings.get("APP_KEY"),
+#     "API_SECRET": cloudinary_settings.get("API_SECRET"),
+# }
+# DEFAULT_FIE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
